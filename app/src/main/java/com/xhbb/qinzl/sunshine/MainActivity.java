@@ -4,7 +4,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.xhbb.qinzl.sunshine.data.PreferencesUtils;
+import com.xhbb.qinzl.sunshine.server.NetworkUtils;
+
+public class MainActivity extends AppCompatActivity
+        implements Response.Listener<String>, Response.ErrorListener {
+
+    private static final String TAG = "MainActivity";
 
     private TextView mWeatherTextView;
 
@@ -15,11 +23,27 @@ public class MainActivity extends AppCompatActivity {
 
         mWeatherTextView = (TextView) findViewById(R.id.weatherTextView);
 
-        for (int i = 0; i < 100; i++) {
-            mWeatherTextView.append("晴 22°");
-            if (i < 99) {
-                mWeatherTextView.append("\n");
-            }
-        }
+        addWeatherLocationNetworkRequest();
+    }
+
+    private void addWeatherLocationNetworkRequest() {
+        String weatherLocation = PreferencesUtils.getWeatherLocation(this);
+        NetworkUtils.addWeatherLocationRequest(this, this, this, TAG, weatherLocation);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NetworkUtils.cancelAllRequests(this, TAG);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onResponse(String response) {
+
     }
 }
