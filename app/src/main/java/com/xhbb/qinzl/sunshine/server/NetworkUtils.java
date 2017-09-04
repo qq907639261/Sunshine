@@ -3,10 +3,12 @@ package com.xhbb.qinzl.sunshine.server;
 import android.content.Context;
 import android.net.Uri;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
+import com.xhbb.qinzl.sunshine.R;
 import com.xhbb.qinzl.sunshine.common.MainSingleton;
+import com.xhbb.qinzl.sunshine.server.JsonObjects.WeatherObject;
+
+import java.util.HashMap;
 
 /**
  * Created by qinzl on 2017/9/3.
@@ -14,19 +16,18 @@ import com.xhbb.qinzl.sunshine.common.MainSingleton;
 
 public class NetworkUtils {
 
-    public static void addWeatherLocationRequest(Context context, Response.Listener<String> listener,
+    public static void addWeatherLocationRequest(Context context, String weatherLocation,
+                                                 Response.Listener<WeatherObject> listener,
                                                  Response.ErrorListener errorListener,
-                                                 String weatherLocation, Object requestTag) {
-        String url = Uri.parse("https://andfun-weather.udacity.com/weather")
-                .buildUpon()
-                .appendQueryParameter("q", weatherLocation)
-                .appendQueryParameter("mode", "json")
-                .appendQueryParameter("units", "metric")
-                .appendQueryParameter("cnt", "14")
-                .build()
-                .toString();
+                                                 Object requestTag) {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "APPCODE " + context.getString(R.string.aliyun_app_code));
+        String url = Uri.parse("http://ali-weather.showapi.com/day15").buildUpon()
+                .appendQueryParameter("area", weatherLocation)
+                .build().toString();
 
-        StringRequest request = new StringRequest(Request.Method.GET, url, listener, errorListener);
+        GsonRequest request = new GsonRequest<>(url, errorListener, WeatherObject.class, listener,
+                headers);
         request.setTag(requestTag);
 
         MainSingleton.getInstance(context).addToRequestQueue(request);

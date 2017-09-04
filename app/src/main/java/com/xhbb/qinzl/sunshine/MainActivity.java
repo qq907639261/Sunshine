@@ -7,10 +7,11 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.xhbb.qinzl.sunshine.data.PreferencesUtils;
+import com.xhbb.qinzl.sunshine.server.JsonObjects;
 import com.xhbb.qinzl.sunshine.server.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity
-        implements Response.Listener<String>, Response.ErrorListener {
+        implements Response.Listener<JsonObjects.WeatherObject>, Response.ErrorListener {
 
     private static final String TAG = "MainActivity";
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity
 
     private void addWeatherLocationNetworkRequest() {
         String weatherLocation = PreferencesUtils.getWeatherLocation(this);
-        NetworkUtils.addWeatherLocationRequest(this, this, this, TAG, weatherLocation);
+        NetworkUtils.addWeatherLocationRequest(this, weatherLocation, this, this, TAG);
     }
 
     @Override
@@ -39,11 +40,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onErrorResponse(VolleyError error) {
-
     }
 
     @Override
-    public void onResponse(String response) {
-
+    public void onResponse(JsonObjects.WeatherObject response) {
+        for (JsonObjects.WeatherObject.Body.Weather weather : response.showapi_res_body.dayList) {
+            mWeatherTextView.append(weather.daytime + "\n");
+            mWeatherTextView.append(weather.day_weather + "\n");
+            mWeatherTextView.append(weather.day_air_temperature + "\n");
+            mWeatherTextView.append(weather.day_wind_power + "\n");
+            mWeatherTextView.append(weather.day_wind_direction + "\n");
+            mWeatherTextView.append(weather.day_weather_pic + "\n\n");
+        }
     }
 }

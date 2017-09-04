@@ -22,6 +22,6 @@ public class PreferencesUtils {
     public static String getWeatherLocation(Context context) {
         String key = context.getString(R.string.key_weather_location);
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(key, "94043,USA");
+                .getString(key, "深圳");
     }
 }
