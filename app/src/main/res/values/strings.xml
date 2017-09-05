@@ -2,5 +2,6 @@
     <string name="app_name">阳光天气</string>
 
     <string name="key_weather_location" translatable="false">key_weather_location</string>
-    <string name="networking_failed_text">网络异常，请检查网络。</string>
+
+    <string name="networking_failed_text">联网失败，请检查网络。</string>
 </resources>
