@@ -6,7 +6,7 @@ import android.net.Uri;
 import com.android.volley.Response;
 import com.xhbb.qinzl.sunshine.R;
 import com.xhbb.qinzl.sunshine.common.MainSingleton;
-import com.xhbb.qinzl.sunshine.server.JsonObjects.WeatherObject;
+import com.xhbb.qinzl.sunshine.server.JsonUtils.WeatherJson;
 
 import java.util.HashMap;
 
@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class NetworkUtils {
 
     public static void addWeatherLocationRequest(Context context, String weatherLocation,
-                                                 Response.Listener<WeatherObject> listener,
+                                                 Response.Listener<WeatherJson> listener,
                                                  Response.ErrorListener errorListener,
                                                  Object requestTag) {
         HashMap<String, String> headers = new HashMap<>();
@@ -26,7 +26,7 @@ public class NetworkUtils {
                 .appendQueryParameter("area", weatherLocation)
                 .build().toString();
 
-        GsonRequest request = new GsonRequest<>(url, errorListener, WeatherObject.class, listener,
+        GsonRequest request = new GsonRequest<>(url, errorListener, WeatherJson.class, listener,
                 headers);
         request.setTag(requestTag);
 
