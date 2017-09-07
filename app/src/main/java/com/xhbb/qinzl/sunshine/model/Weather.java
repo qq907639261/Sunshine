@@ -13,12 +13,10 @@ public class Weather implements Parcelable {
     private String mDayWindPowerDescription;
     private String mDayTemperature;
     private String mDayWeatherIconUrl;
-    private String mDayWindDirection;
     private String mNightWeatherDescription;
     private String mNightWindPowerDescription;
     private String mNightTemperature;
     private String mNightWeatherIconUrl;
-    private String mNightWindDirection;
     private String mSunriseAndSunsetTime;
     private int mDayOfWeek;
 
@@ -57,6 +55,54 @@ public class Weather implements Parcelable {
         mDayWeatherIconUrl = dayWeatherIconUrl;
     }
 
+    public String getNightWeatherDescription() {
+        return mNightWeatherDescription;
+    }
+
+    public void setNightWeatherDescription(String nightWeatherDescription) {
+        mNightWeatherDescription = nightWeatherDescription;
+    }
+
+    public String getNightWindPowerDescription() {
+        return mNightWindPowerDescription;
+    }
+
+    public void setNightWindPowerDescription(String nightWindPowerDescription) {
+        mNightWindPowerDescription = nightWindPowerDescription;
+    }
+
+    public String getNightTemperature() {
+        return mNightTemperature;
+    }
+
+    public void setNightTemperature(String nightTemperature) {
+        mNightTemperature = nightTemperature;
+    }
+
+    public String getNightWeatherIconUrl() {
+        return mNightWeatherIconUrl;
+    }
+
+    public void setNightWeatherIconUrl(String nightWeatherIconUrl) {
+        mNightWeatherIconUrl = nightWeatherIconUrl;
+    }
+
+    public String getSunriseAndSunsetTime() {
+        return mSunriseAndSunsetTime;
+    }
+
+    public void setSunriseAndSunsetTime(String sunriseAndSunsetTime) {
+        mSunriseAndSunsetTime = sunriseAndSunsetTime;
+    }
+
+    public int getDayOfWeek() {
+        return mDayOfWeek;
+    }
+
+    public void setDayOfWeek(int dayOfWeek) {
+        mDayOfWeek = dayOfWeek;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -68,12 +114,10 @@ public class Weather implements Parcelable {
         parcel.writeString(mDayWindPowerDescription);
         parcel.writeString(mDayTemperature);
         parcel.writeString(mDayWeatherIconUrl);
-        parcel.writeString(mDayWindDirection);
         parcel.writeString(mNightWeatherDescription);
         parcel.writeString(mNightWindPowerDescription);
         parcel.writeString(mNightTemperature);
         parcel.writeString(mNightWeatherIconUrl);
-        parcel.writeString(mNightWindDirection);
         parcel.writeString(mSunriseAndSunsetTime);
         parcel.writeInt(mDayOfWeek);
     }
@@ -83,12 +127,10 @@ public class Weather implements Parcelable {
         mDayWindPowerDescription = in.readString();
         mDayTemperature = in.readString();
         mDayWeatherIconUrl = in.readString();
-        mDayWindDirection = in.readString();
         mNightWeatherDescription = in.readString();
         mNightWindPowerDescription = in.readString();
         mNightTemperature = in.readString();
         mNightWeatherIconUrl = in.readString();
-        mNightWindDirection = in.readString();
         mSunriseAndSunsetTime = in.readString();
         mDayOfWeek = in.readInt();
     }

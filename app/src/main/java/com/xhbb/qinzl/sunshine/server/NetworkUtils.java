@@ -24,6 +24,7 @@ public class NetworkUtils {
         headers.put("Authorization", "APPCODE " + context.getString(R.string.aliyun_app_code));
         String url = Uri.parse("http://ali-weather.showapi.com/area-to-weather").buildUpon()
                 .appendQueryParameter("area", weatherLocation)
+                .appendQueryParameter("needIndex", "1")
                 .appendQueryParameter("needMoreDay", "1")
                 .build().toString();
 

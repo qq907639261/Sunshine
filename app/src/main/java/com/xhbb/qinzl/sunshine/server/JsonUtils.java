@@ -31,6 +31,12 @@ public class JsonUtils {
         weather.setDayWindPowerDescription(weatherObject.day_wind_power);
         weather.setDayTemperature(weatherObject.day_air_temperature);
         weather.setDayWeatherIconUrl(weatherObject.day_weather_pic);
+        weather.setNightWeatherDescription(weatherObject.night_weather);
+        weather.setNightWindPowerDescription(weatherObject.night_wind_power);
+        weather.setNightTemperature(weatherObject.night_air_temperature);
+        weather.setNightWeatherIconUrl(weatherObject.night_weather_pic);
+        weather.setDayOfWeek(weatherObject.weekday);
+        weather.setSunriseAndSunsetTime(weatherObject.sun_begin_end);
 
         weatherList.add(weather);
     }
@@ -55,12 +61,10 @@ public class JsonUtils {
                 String day_wind_power;
                 String day_air_temperature;
                 String day_weather_pic;
-                String day_wind_direction;
                 String night_weather;
                 String night_wind_power;
                 String night_air_temperature;
                 String night_weather_pic;
-                String night_wind_direction;
                 String sun_begin_end;
                 int weekday;
             }
