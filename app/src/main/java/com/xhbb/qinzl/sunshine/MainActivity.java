@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity
                 mWeatherTextView = (TextView) itemView;
             }
 
-            void bindWeather(final Context context, Weather weather) {
+            void bindWeather(final Context context, final Weather weather) {
                 mWeatherTextView.setText("");
 
                 mWeatherTextView.append(weather.getDayWeatherDescription() + "\n");
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity
                 mWeatherTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        WeatherDetailActivity.start(context);
+                        WeatherDetailActivity.start(context, weather);
                     }
                 });
             }

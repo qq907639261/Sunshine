@@ -22,8 +22,9 @@ public class NetworkUtils {
                                                  Object requestTag) {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "APPCODE " + context.getString(R.string.aliyun_app_code));
-        String url = Uri.parse("http://ali-weather.showapi.com/day15").buildUpon()
+        String url = Uri.parse("http://ali-weather.showapi.com/area-to-weather").buildUpon()
                 .appendQueryParameter("area", weatherLocation)
+                .appendQueryParameter("needMoreDay", "1")
                 .build().toString();
 
         GsonRequest request = new GsonRequest<>(url, errorListener, WeatherJson.class, listener,
