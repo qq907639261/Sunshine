@@ -4,4 +4,7 @@
     <string name="key_weather_location" translatable="false">key_weather_location</string>
 
     <string name="networking_failed_text">联网失败，请检查网络。</string>
+    <string name="share_menu">分享</string>
+    <string name="share_weather_chooser_title">分享天气信息到：</string>
+    <string name="can_not_choose_app_toast">没有可供选择的应用</string>
 </resources>
