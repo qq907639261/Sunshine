@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -44,9 +46,7 @@ public class MainActivity extends AppCompatActivity
         mNetworkingFailedTextView = (TextView) findViewById(R.id.networkingFailedTextView);
         mWeatherAdapter = new WeatherAdapter(this);
 
-        mSwipeRefreshLayout.setRefreshing(true);
         initRecyclerView();
-        addWeatherLocationNetworkRequest();
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
@@ -58,6 +58,13 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mSwipeRefreshLayout.setRefreshing(true);
+        addWeatherLocationNetworkRequest();
+    }
+
     private void addWeatherLocationNetworkRequest() {
         NetworkUtils.cancelAllRequests(this, TAG);
 
@@ -66,9 +73,26 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         NetworkUtils.cancelAllRequests(this, TAG);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_setting:
+                SettingsActivity.start(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -80,12 +104,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResponse(WeatherJson weatherJson) {
         mSwipeRefreshLayout.setRefreshing(false);
-        swapWeatherList(mWeatherAdapter, weatherJson);
-    }
 
-    private void swapWeatherList(WeatherAdapter weatherAdapter, WeatherJson weatherJson) {
         List<Weather> weatherList = JsonUtils.getWeatherList(weatherJson);
-        weatherAdapter.swapWeatherList(weatherList);
+        mWeatherAdapter.swapWeatherList(weatherList);
     }
 
     @Override

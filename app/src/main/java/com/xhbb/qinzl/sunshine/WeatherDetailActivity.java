@@ -48,22 +48,28 @@ public class WeatherDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share:
-                String text = mWeatherDetailTextView.getText().toString();
-                Intent intent = ShareCompat.IntentBuilder.from(this)
-                        .setType("text/plain")
-                        .setChooserTitle(R.string.share_weather_chooser_title)
-                        .setText(text)
-                        .createChooserIntent();
-
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, R.string.can_not_choose_app_toast, Toast.LENGTH_SHORT).show();
-                }
-
+                shareWeatherInfo();
+                return true;
+            case R.id.action_setting:
+                SettingsActivity.start(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void shareWeatherInfo() {
+        String text = mWeatherDetailTextView.getText().toString();
+        Intent intent = ShareCompat.IntentBuilder.from(this)
+                .setType("text/plain")
+                .setChooserTitle(R.string.title_share_weather_chooser)
+                .setText(text)
+                .createChooserIntent();
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, R.string.toast_no_matched_app, Toast.LENGTH_SHORT).show();
         }
     }
 }

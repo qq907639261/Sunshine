@@ -12,7 +12,7 @@ import com.xhbb.qinzl.sunshine.R;
 public class PreferencesUtils {
 
     public static void saveWeatherLocation(Context context, String weatherLocation) {
-        String key = context.getString(R.string.key_weather_location);
+        String key = context.getString(R.string.pref_key_weather_location);
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(key, weatherLocation)
@@ -20,7 +20,7 @@ public class PreferencesUtils {
     }
 
     public static String getWeatherLocation(Context context) {
-        String key = context.getString(R.string.key_weather_location);
+        String key = context.getString(R.string.pref_key_weather_location);
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(key, "深圳");
     }

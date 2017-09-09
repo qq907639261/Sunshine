@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/networking_failed_text"
+        android:text="@string/text_networking_failed"
         android:textColor="@color/errorText"
         android:textSize="20sp"
         android:visibility="gone"
