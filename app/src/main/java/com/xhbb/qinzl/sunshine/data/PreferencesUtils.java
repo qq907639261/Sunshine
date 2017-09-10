@@ -11,17 +11,15 @@ import com.xhbb.qinzl.sunshine.R;
 
 public class PreferencesUtils {
 
-    public static void saveWeatherLocation(Context context, String weatherLocation) {
-        String key = context.getString(R.string.pref_key_weather_location);
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putString(key, weatherLocation)
-                .apply();
-    }
-
     public static String getWeatherLocation(Context context) {
         String key = context.getString(R.string.pref_key_weather_location);
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(key, "深圳");
+                .getString(key, context.getString(R.string.pref_default_weather_location));
+    }
+
+    public static String getTemperatureUnitValue(Context context) {
+        String key = context.getString(R.string.pref_key_temperature_unit);
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(key, context.getString(R.string.pref_entry_value_metric));
     }
 }

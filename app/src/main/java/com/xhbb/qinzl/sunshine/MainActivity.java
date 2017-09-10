@@ -61,7 +61,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
+
         mSwipeRefreshLayout.setRefreshing(true);
+        String temperatureUnitValue = PreferencesUtils.getTemperatureUnitValue(this);
+
+        mWeatherAdapter.setTemperatureUnitValue(temperatureUnitValue);
         addWeatherLocationNetworkRequest();
     }
 
@@ -119,6 +123,7 @@ public class MainActivity extends AppCompatActivity
 
         private Context mContext;
         private List<Weather> mWeatherList = new ArrayList<>();
+        private String mTemperatureUnitValue;
 
         WeatherAdapter(Context context) {
             mContext = context;
@@ -127,6 +132,10 @@ public class MainActivity extends AppCompatActivity
         void swapWeatherList(List<Weather> weatherList) {
             mWeatherList = weatherList;
             notifyDataSetChanged();
+        }
+
+        void setTemperatureUnitValue(String temperatureUnitValue) {
+            mTemperatureUnitValue = temperatureUnitValue;
         }
 
         @Override
@@ -138,7 +147,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Weather weather = mWeatherList.get(position);
-            holder.bindWeather(mContext, weather);
+            holder.bindWeather(mContext, weather, mTemperatureUnitValue);
         }
 
         @Override
@@ -155,11 +164,21 @@ public class MainActivity extends AppCompatActivity
                 mWeatherTextView = (TextView) itemView;
             }
 
-            void bindWeather(final Context context, final Weather weather) {
+            void bindWeather(final Context context, final Weather weather,
+                             String temperatureUnitValue) {
                 mWeatherTextView.setText("");
+                int temperature = Integer.valueOf(weather.getDayTemperature());
+
+                String formattedTemperature;
+                if (temperatureUnitValue.equals(getString(R.string.pref_entry_value_metric))) {
+                    formattedTemperature = getString(R.string.format_temperature_metric, temperature);
+                } else {
+                    temperature = (int) (temperature * 1.8) + 32;
+                    formattedTemperature = getString(R.string.format_temperature_imperial, temperature);
+                }
 
                 mWeatherTextView.append(weather.getDayWeatherDescription() + "\n");
-                mWeatherTextView.append(weather.getDayTemperature() + "°\n");
+                mWeatherTextView.append(formattedTemperature + "\n");
                 mWeatherTextView.append(weather.getDayWindPowerDescription());
 
                 mWeatherTextView.setOnClickListener(new View.OnClickListener() {
